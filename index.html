@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prüfungsvorbereitung SoSe 2026 — Uni Heidelberg</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3e;
+      --accent: #6c63ff;
+      --accent-dim: #3d3880;
+      --text: #e2e4f0;
+      --muted: #7b7f9a;
+      --tag-bg: #1e2235;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header .logo {
+      width: 38px; height: 38px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    header .title { font-size: 1.1rem; font-weight: 600; }
+    header .subtitle { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    nav {
+      padding: 20px 40px 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+    nav button {
+      padding: 8px 16px;
+      border-radius: 8px 8px 0 0;
+      border: 1px solid transparent;
+      border-bottom: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+      bottom: -1px;
+    }
+    nav button:hover { color: var(--text); }
+    nav button.active {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    main { padding: 32px 40px; max-width: 960px; }
+
+    .subject-panel { display: none; }
+    .subject-panel.active { display: block; }
+
+    .subject-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .subject-header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    .subject-header p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    .btn-dl-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn-dl-all:hover { opacity: 0.85; }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .pdf-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.15s;
+    }
+    .pdf-card:hover { border-color: var(--accent-dim); }
+
+    .pdf-card .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .pdf-icon {
+      width: 36px; height: 36px;
+      background: var(--tag-bg);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .pdf-card .name {
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .pdf-card .size {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-view, .btn-dl {
+      flex: 1;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn-view {
+      background: var(--tag-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-view:hover { opacity: 0.7; }
+    .btn-dl {
+      background: var(--accent-dim);
+      color: #c8c4ff;
+      border: 1px solid transparent;
+    }
+    .btn-dl:hover { opacity: 0.8; }
+
+    footer {
+      margin-top: 60px;
+      padding: 24px 40px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      header, nav, main, footer { padding-left: 18px; padding-right: 18px; }
+      .pdf-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">P</div>
+  <div>
+    <div class="title">Prüfungsvorbereitung SoSe 2026</div>
+    <div class="subtitle">Universität Heidelberg · Semester 4</div>
+  </div>
+</header>
+
+<nav id="nav"></nav>
+<main id="main"></main>
+
+<footer>
+  Letzte Aktualisierung: <span id="updated"></span> &nbsp;·&nbsp;
+  <a href="https://github.com/pashkinzon/pruefungs_vorbereitung_sose26" style="color:var(--accent);text-decoration:none;" target="_blank">GitHub Repository</a>
+</footer>
+
+<script>
+const subjects = [
+  {
+    id: "analyse-2",
+    label: "Analyse 2",
+    desc: "Fourierreihen, Topologie, Analysis",
+    folder: "analyse-2",
+    pdfs: [
+      { name: "VL 01 – Fourierreihen",                   file: "analyse-vl01-fourierreihen.pdf" },
+      { name: "VL 02 – Fourierentwicklung",               file: "analyse-vl02-fourierentwicklung.pdf" },
+      { name: "VL 03 – Fourierreihen (Fortsetzung)",      file: "analyse-vl03-fourierreihen.pdf" },
+      { name: "VL 04 – Topologie",                        file: "analyse-vl04-topologie.pdf" },
+      { name: "VL 05 – Topologie (Fortsetzung)",          file: "analyse-vl05-topologie.pdf" },
+    ]
+  },
+  {
+    id: "datenstrukturen-1",
+    label: "Datenstrukturen 1",
+    desc: "Komplexität, Container, Sortieren",
+    folder: "datenstrukturen-1",
+    pdfs: [
+      { name: "VL 01 – Einführung",      file: "ds-vl01-einfuehrung.pdf" },
+      { name: "VL 02 – Komplexität",     file: "ds-vl02-komplexitaet.pdf" },
+      { name: "VL 03 – Container",       file: "ds-vl03-container.pdf" },
+      { name: "VL 04 – Effizienz",       file: "ds-vl04-effizienz.pdf" },
+      { name: "VL 05 – Sortieren",       file: "ds-vl05-sortieren.pdf" },
+    ]
+  },
+  {
+    id: "lineare-algebra-2",
+    label: "Lineare Algebra 2",
+    desc: "Dualräume, Tensorprodukte",
+    folder: "lineare-algebra-2",
+    pdfs: [
+      { name: "VL 01 – Dualräume",                        file: "la-vl01-dualraeume.pdf" },
+      { name: "VL 02 – Tensorprodukt",                    file: "la-vl02-tensorprodukt.pdf" },
+      { name: "VL 03 – Tensorprodukt (Eigenschaften)",    file: "la-vl03-tensorprodukt-eigenschaften.pdf" },
+    ]
+  },
+  {
+    id: "numerik-0",
+    label: "Numerik 0",
+    desc: "Kondition, LR-Zerlegung, SVD",
+    folder: "numerik-0",
+    pdfs: [
+      { name: "VL 01 – Einführung & Motivation",    file: "numerik-vl01-einfuehrung-motivation.pdf" },
+      { name: "VL 02 – Kondition & Stabilität",     file: "numerik-vl02-kondition-stabilitaet.pdf" },
+      { name: "VL 03 – Zahldarstellung",            file: "numerik-vl03-zahldarstellung.pdf" },
+      { name: "VL 04 – LGS & LR-Zerlegung",        file: "numerik-vl04-lgs-lr-zerlegung.pdf" },
+      { name: "VL 05 – LR-Zerlegung & Normen",     file: "numerik-vl05-lr-zerlegung-normen.pdf" },
+      { name: "VL 06 – SVD & Eigenwerte",           file: "numerik-vl06-svd-eigenwerte.pdf" },
+    ]
+  },
+  {
+    id: "statistik-0",
+    label: "Statistik 0",
+    desc: "Wahrscheinlichkeitstheorie, Poisson",
+    folder: "statistik-0",
+    pdfs: [
+      { name: "Kap 01 – Einführung",                                      file: "statistik-kap01-einfuehrung.pdf" },
+      { name: "Kap 02 – Bedingte Wahrscheinlichkeiten & Unabhängigkeit",  file: "statistik-kap02-bedingte_wahrscheinlichkeiten_unabhängigkeit.pdf" },
+      { name: "Kap 03 – Poisson-Verteilung",                              file: "statistik-kap03-poisson.pdf" },
+    ]
+  },
+];
+
+const nav = document.getElementById('nav');
+const main = document.getElementById('main');
+
+subjects.forEach((subj, i) => {
+  // Nav tab
+  const btn = document.createElement('button');
+  btn.textContent = subj.label;
+  btn.dataset.id = subj.id;
+  if (i === 0) btn.classList.add('active');
+  btn.onclick = () => activate(subj.id);
+  nav.appendChild(btn);
+
+  // Panel
+  const panel = document.createElement('div');
+  panel.className = 'subject-panel' + (i === 0 ? ' active' : '');
+  panel.id = 'panel-' + subj.id;
+
+  const pdfCount = subj.pdfs.length;
+
+  panel.innerHTML = `
+    <div class="subject-header">
+      <div>
+        <h2>${subj.label}</h2>
+        <p>${subj.desc} &nbsp;·&nbsp; ${pdfCount} Dokument${pdfCount !== 1 ? 'e' : ''}</p>
+      </div>
+    </div>
+    <div class="pdf-grid">
+      ${subj.pdfs.map((pdf, j) => `
+        <div class="pdf-card">
+          <div class="card-top">
+            <div class="pdf-icon">PDF</div>
+            <div>
+              <div class="name">${pdf.name}</div>
+              <div class="size" id="size-${subj.id}-${j}">—</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-view" href="${subj.folder}/${pdf.file}" target="_blank">Öffnen</a>
+            <a class="btn-dl" href="${subj.folder}/${pdf.file}" download="${pdf.file}">Download</a>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  main.appendChild(panel);
+});
+
+function activate(id) {
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+  document.querySelectorAll('.subject-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+}
+
+// Show last-modified date from git/static — just show current date as a fallback
+document.getElementById('updated').textContent = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+</script>
+</body>
+</html>
