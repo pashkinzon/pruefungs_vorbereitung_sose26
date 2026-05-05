@@ -5,70 +5,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prüfungsvorbereitung SoSe 2026 — Uni Heidelberg</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --border: #2a2d3e;
-      --accent: #6c63ff;
-      --accent-dim: #3d3880;
-      --text: #e2e4f0;
-      --muted: #7b7f9a;
-      --tag-bg: #1e2235;
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface2: #f0f2f8;
+      --border: #e2e6f0;
+      --accent: #4f46e5;
+      --accent-light: #ede9fe;
+      --accent-text: #4338ca;
+      --text: #18181b;
+      --muted: #71717a;
+      --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 16px rgba(79,70,229,0.06);
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
     }
 
+    /* ── Header ── */
     header {
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 28px 40px;
+      padding: 0 40px;
+      height: 64px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 0 var(--border);
     }
-    header .logo {
-      width: 38px; height: 38px;
-      background: var(--accent);
+    .logo {
+      width: 36px; height: 36px;
+      background: #4f46e5;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0;
+      font-size: 17px; font-weight: 700; color: #ffffff; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.35);
     }
-    header .title { font-size: 1.1rem; font-weight: 600; }
-    header .subtitle { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+    .header-text .title { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+    .header-text .subtitle { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
 
-    nav {
-      padding: 20px 40px 0;
+    /* ── Layout ── */
+    .layout { display: flex; min-height: calc(100vh - 64px); }
+
+    /* ── Sidebar nav ── */
+    aside {
+      width: 220px;
+      flex-shrink: 0;
+      padding: 24px 12px;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      gap: 4px;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
     }
-    nav button {
-      padding: 8px 16px;
-      border-radius: 8px 8px 0 0;
-      border: 1px solid transparent;
-      border-bottom: none;
+    .aside-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 10px;
+      margin-bottom: 6px;
+    }
+    aside button {
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: none;
       background: transparent;
       color: var(--muted);
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.15s;
-      position: relative;
-      bottom: -1px;
-    }
-    nav button:hover { color: var(--text); }
-    nav button.active {
-      background: var(--surface);
-      border-color: var(--border);
-      color: var(--text);
+      font-size: 0.875rem;
       font-weight: 500;
+      cursor: pointer;
+      transition: all 0.12s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: inherit;
     }
+    aside button:hover { background: var(--surface2); color: var(--text); }
+    aside button.active {
+      background: var(--accent-light);
+      color: var(--accent-text);
+    }
+    aside button .nav-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+    aside button.active .nav-dot { opacity: 1; }
 
-    main { padding: 32px 40px; max-width: 960px; }
+    /* ── Main content ── */
+    .content {
+      flex: 1;
+      padding: 32px 36px;
+      min-width: 0;
+    }
 
     .subject-panel { display: none; }
     .subject-panel.active { display: block; }
@@ -78,121 +129,244 @@
       align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
       margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
     }
     .subject-header h2 {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .subject-header .meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
       font-weight: 600;
+      background: var(--accent-light);
+      color: var(--accent-text);
     }
-    .subject-header p {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 4px;
-    }
+    .subject-header .desc { font-size: 0.85rem; color: var(--muted); }
 
+    /* Download all button */
     .btn-dl-all {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 9px 18px;
+      gap: 8px;
+      padding: 10px 20px;
       background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       text-decoration: none;
-      transition: opacity 0.15s;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(79,70,229,0.25);
+      font-family: inherit;
       white-space: nowrap;
+      flex-shrink: 0;
     }
-    .btn-dl-all:hover { opacity: 0.85; }
+    .btn-dl-all:hover {
+      background: #4338ca;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(79,70,229,0.35);
+    }
+    .btn-dl-all:active { transform: translateY(0); }
+    .btn-dl-all svg { width: 15px; height: 15px; }
 
+    /* ── PDF Grid ── */
     .pdf-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 16px;
     }
 
     .pdf-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 18px;
+      border-radius: 14px;
+      padding: 18px 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      transition: border-color 0.15s;
+      gap: 14px;
+      box-shadow: var(--shadow-card);
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.12s;
+      cursor: pointer;
     }
-    .pdf-card:hover { border-color: var(--accent-dim); }
+    .pdf-card:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 4px 20px rgba(79,70,229,0.1);
+      transform: translateY(-2px);
+    }
 
-    .pdf-card .card-top {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
+    .card-top { display: flex; align-items: flex-start; gap: 13px; }
     .pdf-icon {
-      width: 36px; height: 36px;
-      background: var(--tag-bg);
+      width: 40px; height: 44px;
+      background: linear-gradient(145deg, #f0f2f8, #e4e8f5);
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      color: var(--accent);
-      font-size: 15px;
-      font-weight: 700;
+      position: relative;
+      border: 1px solid var(--border);
     }
-    .pdf-card .name {
-      font-size: 0.88rem;
-      font-weight: 500;
+    .pdf-icon::after {
+      content: 'PDF';
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+    }
+    .card-name {
+      font-size: 0.875rem;
+      font-weight: 600;
       line-height: 1.4;
       word-break: break-word;
+      color: var(--text);
     }
-    .pdf-card .size {
-      font-size: 0.75rem;
+    .card-filename {
+      font-size: 0.72rem;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 3px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .card-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .btn-view, .btn-dl {
+    .card-actions { display: flex; gap: 8px; }
+    .btn-preview, .btn-dl {
       flex: 1;
-      padding: 7px 10px;
-      border-radius: 7px;
+      padding: 8px 10px;
+      border-radius: 8px;
       font-size: 0.78rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       text-align: center;
       text-decoration: none;
-      transition: opacity 0.15s;
-    }
-    .btn-view {
-      background: var(--tag-bg);
-      color: var(--text);
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      transition: all 0.12s;
+      font-family: inherit;
       border: 1px solid var(--border);
     }
-    .btn-view:hover { opacity: 0.7; }
-    .btn-dl {
-      background: var(--accent-dim);
-      color: #c8c4ff;
-      border: 1px solid transparent;
+    .btn-preview {
+      background: var(--surface2);
+      color: var(--text);
     }
-    .btn-dl:hover { opacity: 0.8; }
+    .btn-preview:hover { background: #e2e6f0; }
+    .btn-dl {
+      background: var(--accent-light);
+      color: var(--accent-text);
+      border-color: #c7d2fe;
+    }
+    .btn-dl:hover { background: #ddd6fe; }
+    .btn-preview svg, .btn-dl svg { width: 13px; height: 13px; flex-shrink: 0; }
 
+    /* ── PDF Viewer Modal ── */
+    dialog#modal {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      width: calc(100vw - 48px);
+      max-width: 900px;
+      height: 90vh;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0;
+    }
+    dialog#modal[open] { display: flex; }
+    dialog#modal::backdrop {
+      background: rgba(15,15,30,0.55);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .modal-title {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .modal-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .modal-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      text-decoration: none;
+      transition: background 0.12s;
+      font-family: inherit;
+    }
+    .modal-btn:hover { background: #e2e6f0; }
+    .modal-btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
+    .modal-btn.primary:hover { background: #4338ca; }
+    .modal-close {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--muted);
+      transition: background 0.12s, color 0.12s;
+      flex-shrink: 0;
+    }
+    .modal-close:hover { background: #ffe4e4; color: #be123c; border-color: #fecdd3; }
+    .modal-body { flex: 1; overflow: hidden; }
+    .modal-body iframe {
+      width: 100%; height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── Footer ── */
     footer {
-      margin-top: 60px;
-      padding: 24px 40px;
+      margin-top: 48px;
+      padding: 20px 36px;
       border-top: 1px solid var(--border);
       font-size: 0.78rem;
       color: var(--muted);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
     }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
 
-    @media (max-width: 600px) {
-      header, nav, main, footer { padding-left: 18px; padding-right: 18px; }
-      .pdf-grid { grid-template-columns: 1fr; }
+    @media (max-width: 700px) {
+      aside { display: none; }
+      .content { padding: 20px 18px; }
+      .mobile-nav { display: flex; }
+      header { padding: 0 18px; }
     }
   </style>
 </head>
@@ -200,25 +374,44 @@
 
 <header>
   <div class="logo">P</div>
-  <div>
+  <div class="header-text">
     <div class="title">Prüfungsvorbereitung SoSe 2026</div>
     <div class="subtitle">Universität Heidelberg · Semester 4</div>
   </div>
 </header>
 
-<nav id="nav"></nav>
-<main id="main"></main>
+<div class="layout">
+  <aside id="aside"></aside>
+  <div class="content" id="content"></div>
+</div>
 
-<footer>
-  Letzte Aktualisierung: <span id="updated"></span> &nbsp;·&nbsp;
-  <a href="https://github.com/pashkinzon/pruefungs_vorbereitung_sose26" style="color:var(--accent);text-decoration:none;" target="_blank">GitHub Repository</a>
-</footer>
+<!-- PDF Viewer Modal -->
+<dialog id="modal" aria-label="PDF Vorschau">
+  <div class="modal-header">
+    <div class="modal-title" id="modal-title">—</div>
+    <div class="modal-actions">
+      <a class="modal-btn primary" id="modal-dl" href="#" download>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M8 2v8m0 0-3-3m3 3 3-3M2 13h12"/></svg>
+        Download
+      </a>
+      <a class="modal-btn" id="modal-open" href="#" target="_blank">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M10 2h4v4M14 2 8 8M6 4H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-3"/></svg>
+        Neues Tab
+      </a>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <iframe id="modal-iframe" src="about:blank" title="PDF Vorschau"></iframe>
+  </div>
+</dialog>
 
 <script>
 const subjects = [
   {
     id: "analyse-2",
     label: "Analyse 2",
+    color: "#6366f1",
     desc: "Fourierreihen, Topologie, Analysis",
     folder: "analyse-2",
     pdfs: [
@@ -232,6 +425,7 @@ const subjects = [
   {
     id: "datenstrukturen-1",
     label: "Datenstrukturen 1",
+    color: "#0ea5e9",
     desc: "Komplexität, Container, Sortieren",
     folder: "datenstrukturen-1",
     pdfs: [
@@ -245,6 +439,7 @@ const subjects = [
   {
     id: "lineare-algebra-2",
     label: "Lineare Algebra 2",
+    color: "#10b981",
     desc: "Dualräume, Tensorprodukte",
     folder: "lineare-algebra-2",
     pdfs: [
@@ -256,6 +451,7 @@ const subjects = [
   {
     id: "numerik-0",
     label: "Numerik 0",
+    color: "#f59e0b",
     desc: "Kondition, LR-Zerlegung, SVD",
     folder: "numerik-0",
     pdfs: [
@@ -270,71 +466,136 @@ const subjects = [
   {
     id: "statistik-0",
     label: "Statistik 0",
+    color: "#ec4899",
     desc: "Wahrscheinlichkeitstheorie, Poisson",
     folder: "statistik-0",
     pdfs: [
       { name: "Kap 01 – Einführung",                                      file: "statistik-kap01-einfuehrung.pdf" },
-      { name: "Kap 02 – Bedingte Wahrscheinlichkeiten & Unabhängigkeit",  file: "statistik-kap02-bedingte_wahrscheinlichkeiten_unabhängigkeit.pdf" },
+      { name: "Kap 02 – Bedingte W'keiten & Unabhängigkeit",              file: "statistik-kap02-bedingte_wahrscheinlichkeiten_unabhängigkeit.pdf" },
       { name: "Kap 03 – Poisson-Verteilung",                              file: "statistik-kap03-poisson.pdf" },
     ]
   },
 ];
 
-const nav = document.getElementById('nav');
-const main = document.getElementById('main');
+const aside = document.getElementById('aside');
+const content = document.getElementById('content');
+
+// Sidebar label
+const lbl = document.createElement('div');
+lbl.className = 'aside-label';
+lbl.textContent = 'Fächer';
+aside.appendChild(lbl);
 
 subjects.forEach((subj, i) => {
-  // Nav tab
+  /* ── Sidebar button ── */
   const btn = document.createElement('button');
-  btn.textContent = subj.label;
   btn.dataset.id = subj.id;
+  btn.innerHTML = `<span class="nav-dot"></span>${subj.label}`;
+  btn.style.setProperty('--dot-color', subj.color);
   if (i === 0) btn.classList.add('active');
   btn.onclick = () => activate(subj.id);
-  nav.appendChild(btn);
+  aside.appendChild(btn);
 
-  // Panel
+  /* ── Subject panel ── */
   const panel = document.createElement('div');
   panel.className = 'subject-panel' + (i === 0 ? ' active' : '');
   panel.id = 'panel-' + subj.id;
 
-  const pdfCount = subj.pdfs.length;
+  const n = subj.pdfs.length;
 
   panel.innerHTML = `
     <div class="subject-header">
       <div>
         <h2>${subj.label}</h2>
-        <p>${subj.desc} &nbsp;·&nbsp; ${pdfCount} Dokument${pdfCount !== 1 ? 'e' : ''}</p>
+        <div class="meta">
+          <span class="badge" style="background:${subj.color}18;color:${subj.color}">
+            ${n === 1 ? '1 Dokument' : `${n} Dokumente`}
+          </span>
+          <span class="desc">${subj.desc}</span>
+        </div>
       </div>
+      <button class="btn-dl-all" onclick="downloadAll('${subj.id}')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8m0 0-3-3m3 3 3-3M2 13h12"/></svg>
+        Alle herunterladen
+      </button>
     </div>
-    <div class="pdf-grid">
-      ${subj.pdfs.map((pdf, j) => `
-        <div class="pdf-card">
+    <div class="pdf-grid" id="grid-${subj.id}">
+      ${subj.pdfs.map((pdf) => `
+        <div class="pdf-card" onclick="openModal('${subj.folder}/${pdf.file}', '${pdf.name}')">
           <div class="card-top">
-            <div class="pdf-icon">PDF</div>
-            <div>
-              <div class="name">${pdf.name}</div>
-              <div class="size" id="size-${subj.id}-${j}">—</div>
+            <div class="pdf-icon"></div>
+            <div style="min-width:0">
+              <div class="card-name">${pdf.name}</div>
+              <div class="card-filename">${pdf.file}</div>
             </div>
           </div>
-          <div class="card-actions">
-            <a class="btn-view" href="${subj.folder}/${pdf.file}" target="_blank">Öffnen</a>
-            <a class="btn-dl" href="${subj.folder}/${pdf.file}" download="${pdf.file}">Download</a>
+          <div class="card-actions" onclick="event.stopPropagation()">
+            <button class="btn-preview" onclick="openModal('${subj.folder}/${pdf.file}', '${pdf.name}')">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5v3l1.5 1.5"/></svg>
+              Vorschau
+            </button>
+            <a class="btn-dl" href="${subj.folder}/${pdf.file}" download="${pdf.file}">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8m0 0-3-3m3 3 3-3M2 13h12"/></svg>
+              Download
+            </a>
           </div>
         </div>
       `).join('')}
     </div>
+    <footer style="margin-top:32px;padding:16px 0 0;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;">
+      Letzte Aktualisierung: ${new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+      &nbsp;·&nbsp;
+      <a href="https://github.com/pashkinzon/pruefungs_vorbereitung_sose26" style="color:var(--accent);text-decoration:none;" target="_blank">GitHub</a>
+    </footer>
   `;
 
-  main.appendChild(panel);
+  content.appendChild(panel);
 });
 
+/* ── Nav activation ── */
 function activate(id) {
-  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+  document.querySelectorAll('aside button').forEach(b => b.classList.toggle('active', b.dataset.id === id));
   document.querySelectorAll('.subject-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
 }
 
-// Show last-modified date from git/static — just show current date as a fallback
-document.getElementById('updated').textContent = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+/* ── PDF Modal ── */
+const modal = document.getElementById('modal');
+
+function openModal(path, name) {
+  document.getElementById('modal-title').textContent = name;
+  document.getElementById('modal-iframe').src = path;
+  document.getElementById('modal-dl').href = path;
+  document.getElementById('modal-dl').download = path.split('/').pop();
+  document.getElementById('modal-open').href = path;
+  modal.showModal();
+}
+function closeModal() {
+  modal.close();
+  document.getElementById('modal-iframe').src = 'about:blank';
+}
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+/* ── Download all ── */
+function downloadAll(subjId) {
+  const subj = subjects.find(s => s.id === subjId);
+  if (!subj) return;
+  subj.pdfs.forEach((pdf, i) => {
+    setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = subj.folder + '/' + pdf.file;
+      a.download = pdf.file;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }, i * 300);
+  });
+}
+
+/* Apply subject accent colors to nav dots */
+subjects.forEach(subj => {
+  const btn = aside.querySelector(`[data-id="${subj.id}"] .nav-dot`);
+  if (btn) btn.style.background = subj.color;
+});
 </script>
 </body>
 </html>
